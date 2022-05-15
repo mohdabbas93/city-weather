@@ -1,6 +1,5 @@
 package com.mohdabbas.cityweather.ui.details
 
-//import com.mohdabbas.cityweather.ui.list.CityWeatherListFragmentArgs
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,7 +53,10 @@ class CityWeatherDetailsFragment : Fragment(R.layout.fragment_city_weather_detai
 
             tvWeatherCondition.text =
                 weather?.main ?: getString(R.string.unavailable_weather_condition)
-            tvTemp.text = cityWeather.main.temp.temperatureFromKelvinToCelsius().toString()
+            tvTemp.text = getString(
+                R.string.temp_format,
+                cityWeather.main.temp.temperatureFromKelvinToCelsius()
+            )
 
             Glide.with(requireContext())
                 .load("http://openweathermap.org/img/wn/${weather?.icon ?: ""}@2x.png")
@@ -63,13 +65,16 @@ class CityWeatherDetailsFragment : Fragment(R.layout.fragment_city_weather_detai
                 .into(ivWeatherIcon)
 
             wind.tvTitle.text = getString(R.string.wind)
-            wind.tvValue.text = cityWeather.wind.speed.toInt().toString()
+            wind.tvValue.text =
+                getString(R.string.wind_speed_format, cityWeather.wind.speed.toInt())
 
             humidity.tvTitle.text = getString(R.string.humidity)
-            humidity.tvValue.text = cityWeather.main.humidity.toInt().toString()
+            humidity.tvValue.text =
+                getString(R.string.humidity_format, cityWeather.main.humidity.toInt())
 
             pressure.tvTitle.text = getString(R.string.pressure)
-            pressure.tvValue.text = cityWeather.main.pressure.toInt().toString()
+            pressure.tvValue.text =
+                getString(R.string.pressure_format, cityWeather.main.pressure.toInt())
         }
     }
 
