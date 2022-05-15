@@ -52,6 +52,12 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel.getCitiesWeather()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
