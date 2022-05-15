@@ -40,7 +40,11 @@ class CityWeatherAdapter(private var data: List<CityWeather>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
-            tvTemp.text = data[position].main.temp.temperatureFromKelvinToCelsius().toString()
+            tvTemp.text =
+                holder.view.context.getString(
+                    R.string.temp_format,
+                    data[position].main.temp.temperatureFromKelvinToCelsius()
+                )
             tvCityCountryName.text = view.context.getString(
                 R.string.city_name_country_name,
                 data[position].city.name,
@@ -75,59 +79,3 @@ class CityWeatherAdapter(private var data: List<CityWeather>) :
         notifyDataSetChanged()
     }
 }
-/*
-
-    private var _binding: FragmentCityWeatherDetailsBinding? = null
-    private val binding get() = _binding!!
-
-    private val sharedViewModel: SharedViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentCityWeatherDetailsBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        sharedViewModel
-
-        val cityWeather = sharedViewModel.getCityWeatherInfoByCityId(
-            sharedViewModel.citiesWeather.value?.first()?.city?.id ?: 1
-        )
-        binding.apply {
-            cityWeather?.let {
-                tvWeatherCondition.text =
-                    it.weather.firstOrNull()?.main ?: "No weather condition available"
-                tvTemp.text = it.main.temp.temperatureFromKelvinToCelsius().toString()
-                Glide.with(requireContext())
-                    .load("http://openweathermap.org/img/wn/${it.weather.firstOrNull()?.icon ?: ""}@2x.png")
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .into(ivWeatherIcon)
-
-                wind.tvTitle.text = "Wind"
-                wind.tvValue.text = it.wind.speed.toInt().toString()
-
-                humidity.tvTitle.text = "Humidity"
-                humidity.tvValue.text = it.main.humidity.toInt().toString()
-
-                pressure.tvTitle.text = "Pressure"
-                pressure.tvValue.text = it.main.pressure.toInt().toString()
-            }
-        }
-    }
-
-    private fun inflateViews() {
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
- */
