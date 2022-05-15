@@ -3,7 +3,9 @@ package com.mohdabbas.cityweather.util
 import android.content.Context
 import com.google.gson.Gson
 import com.mohdabbas.cityweather.data.CityWeather
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
+import javax.inject.Inject
 
 
 /**
@@ -11,7 +13,7 @@ import java.io.IOException
  * On: 5/14/22.
  */
 
-class JsonParser(private val context: Context) {
+class JsonParser @Inject constructor(@ApplicationContext private val context: Context) {
 
     private val gson = Gson()
 
