@@ -32,4 +32,8 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
             it.city.findname.contains(name.trim(), ignoreCase = true)
         } ?: listOf()
     }
+
+    fun getCityWeatherInfoByCityId(cityId: Int): CityWeather? {
+        return citiesWeather.value?.firstOrNull { it.city.id == cityId }
+    }
 }
