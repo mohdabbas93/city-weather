@@ -7,5 +7,15 @@
     <fragment
         android:id="@+id/cityWeatherListFragment"
         android:name="com.mohdabbas.cityweather.ui.list.CityWeatherListFragment"
-        android:label="CityWeatherListFragment" />
+        android:label="CityWeatherListFragment">
+        <action
+            android:id="@+id/action_cityWeatherListFragment_to_cityWeatherDetailsFragment"
+            app:destination="@id/cityWeatherDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cityWeatherDetailsFragment"
+        android:name="com.mohdabbas.cityweather.ui.details.CityWeatherDetailsFragment"
+        android:label="CityWeatherDetailsFragment" />
+
 </navigation>
