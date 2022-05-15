@@ -42,7 +42,7 @@ class CityWeatherAdapter(private var data: List<CityWeather>) :
                 data[position].city.name,
                 data[position].city.country
             )
-            tvWeatherCondition.text = data[position].weather.firstOrNull()?.description ?: ""
+            tvWeatherCondition.text = data[position].weather.firstOrNull()?.main ?: ""
         }
     }
 
