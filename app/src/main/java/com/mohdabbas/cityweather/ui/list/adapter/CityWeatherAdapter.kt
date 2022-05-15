@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.mohdabbas.cityweather.R
 import com.mohdabbas.cityweather.data.CityWeather
 import com.mohdabbas.cityweather.databinding.ItemCityWeatherBinding
@@ -42,7 +43,16 @@ class CityWeatherAdapter(private var data: List<CityWeather>) :
                 data[position].city.name,
                 data[position].city.country
             )
-            tvWeatherCondition.text = data[position].weather.firstOrNull()?.main ?: ""
+
+            data[position].weather.firstOrNull()?.let {
+                tvWeatherCondition.text = it.main ?: ""
+
+                Glide.with(holder.view.context)
+                    .load("http://openweathermap.org/img/wn/${it.icon ?: ""}@2x.png")
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(holder.ivWeatherConditionIcon)
+            }
         }
     }
 
