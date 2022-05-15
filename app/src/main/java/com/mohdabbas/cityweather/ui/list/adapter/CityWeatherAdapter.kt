@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.mohdabbas.cityweather.R
 import com.mohdabbas.cityweather.data.CityWeather
 import com.mohdabbas.cityweather.databinding.ItemCityWeatherBinding
+import com.mohdabbas.cityweather.util.WeatherUtil.temperatureFromKelvinToCelsius
 
 /**
  * Created by Mohammad Abbas
@@ -37,7 +38,7 @@ class CityWeatherAdapter(private var data: List<CityWeather>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
-            tvTemp.text = data[position].main.temp.toInt().toString()
+            tvTemp.text = data[position].main.temp.temperatureFromKelvinToCelsius().toString()
             tvCityCountryName.text = view.context.getString(
                 R.string.city_name_country_name,
                 data[position].city.name,
