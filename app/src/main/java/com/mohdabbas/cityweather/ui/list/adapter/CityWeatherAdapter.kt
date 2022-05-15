@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mohdabbas.cityweather.R
 import com.mohdabbas.cityweather.data.CityWeather
 import com.mohdabbas.cityweather.databinding.ItemCityWeatherBinding
+import com.mohdabbas.cityweather.ui.list.CityWeatherListFragmentDirections
 import com.mohdabbas.cityweather.util.WeatherUtil.temperatureFromKelvinToCelsius
 
 /**
@@ -54,6 +56,15 @@ class CityWeatherAdapter(private var data: List<CityWeather>) :
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(holder.ivWeatherConditionIcon)
             }
+
+            view.setOnClickListener {
+                it.findNavController()
+                    .navigate(
+                        CityWeatherListFragmentDirections.actionCityWeatherListFragmentToCityWeatherDetailsFragment(
+                            cityId = data[position].city.id
+                        )
+                    )
+            }
         }
     }
 
@@ -64,3 +75,59 @@ class CityWeatherAdapter(private var data: List<CityWeather>) :
         notifyDataSetChanged()
     }
 }
+/*
+
+    private var _binding: FragmentCityWeatherDetailsBinding? = null
+    private val binding get() = _binding!!
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentCityWeatherDetailsBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel
+
+        val cityWeather = sharedViewModel.getCityWeatherInfoByCityId(
+            sharedViewModel.citiesWeather.value?.first()?.city?.id ?: 1
+        )
+        binding.apply {
+            cityWeather?.let {
+                tvWeatherCondition.text =
+                    it.weather.firstOrNull()?.main ?: "No weather condition available"
+                tvTemp.text = it.main.temp.temperatureFromKelvinToCelsius().toString()
+                Glide.with(requireContext())
+                    .load("http://openweathermap.org/img/wn/${it.weather.firstOrNull()?.icon ?: ""}@2x.png")
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(ivWeatherIcon)
+
+                wind.tvTitle.text = "Wind"
+                wind.tvValue.text = it.wind.speed.toInt().toString()
+
+                humidity.tvTitle.text = "Humidity"
+                humidity.tvValue.text = it.main.humidity.toInt().toString()
+
+                pressure.tvTitle.text = "Pressure"
+                pressure.tvValue.text = it.main.pressure.toInt().toString()
+            }
+        }
+    }
+
+    private fun inflateViews() {
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+ */
