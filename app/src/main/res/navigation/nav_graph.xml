@@ -10,7 +10,14 @@
         android:label="CityWeatherListFragment">
         <action
             android:id="@+id/action_cityWeatherListFragment_to_cityWeatherDetailsFragment"
-            app:destination="@id/cityWeatherDetailsFragment" />
+            app:destination="@id/cityWeatherDetailsFragment">
+
+            <argument
+                android:name="cityId"
+                android:defaultValue="-1"
+                app:argType="integer" />
+
+        </action>
     </fragment>
 
     <fragment
