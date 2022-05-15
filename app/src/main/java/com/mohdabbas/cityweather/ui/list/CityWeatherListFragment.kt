@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,7 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
 
         setupRecyclerView()
         setupObservers()
+        setupSearch()
 
         return binding.root
     }
@@ -49,6 +51,17 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
     private fun setupObservers() {
         sharedViewModel.citiesWeather.observe(viewLifecycleOwner) {
             cityWeatherAdapter.updateData(it)
+        }
+    }
+
+    private fun setupSearch() {
+        binding.etSearch.setOnEditorActionListener { textView, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH && textView.text.isNotBlank()) {
+                val citiesWeather =
+                    sharedViewModel.searchByCityName(textView.text.trim().toString())
+                cityWeatherAdapter.updateData(citiesWeather)
+            }
+            false
         }
     }
 

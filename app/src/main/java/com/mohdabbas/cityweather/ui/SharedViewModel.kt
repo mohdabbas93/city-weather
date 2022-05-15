@@ -26,4 +26,10 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
             _citiesWeather.postValue(result)
         }
     }
+
+    fun searchByCityName(name: String): List<CityWeather> {
+        return citiesWeather.value?.filter {
+            it.city.findname.contains(name.trim(), ignoreCase = true)
+        } ?: listOf()
+    }
 }
