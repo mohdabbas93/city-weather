@@ -34,6 +34,7 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
         _binding = FragmentCityWeatherListBinding.inflate(layoutInflater, container, false)
 
         setupRecyclerView()
+        setupObservers()
 
         return binding.root
     }
@@ -42,6 +43,12 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
         binding.rvCityWeather.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = cityWeatherAdapter
+        }
+    }
+
+    private fun setupObservers() {
+        sharedViewModel.citiesWeather.observe(viewLifecycleOwner) {
+            cityWeatherAdapter.updateData(it)
         }
     }
 
