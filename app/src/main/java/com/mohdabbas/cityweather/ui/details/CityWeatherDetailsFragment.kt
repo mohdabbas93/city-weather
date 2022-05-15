@@ -51,6 +51,12 @@ class CityWeatherDetailsFragment : Fragment(R.layout.fragment_city_weather_detai
         binding.apply {
             val weather = cityWeather.weather.firstOrNull()
 
+            tvCityCountryName.text = getString(
+                R.string.city_name_country_name,
+                cityWeather.city.name,
+                cityWeather.city.country
+            )
+
             tvWeatherCondition.text =
                 weather?.main ?: getString(R.string.unavailable_weather_condition)
             tvTemp.text = getString(
