@@ -47,4 +47,9 @@ class CityWeatherAdapter(private var data: List<CityWeather>) :
     }
 
     override fun getItemCount() = data.size
+
+    fun updateData(newData: List<CityWeather>) {
+        data = newData
+        notifyDataSetChanged()
+    }
 }
