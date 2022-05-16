@@ -1,5 +1,5 @@
 # City Weather Application
-A simple MVVM application to show a list of city weather where you can search for your favorite city weather and see its weather info
+A simple MVVM application to show a list of cities weather where you can search for your favorite city weather and see its weather info
 
 Weather information includes
 - Current temperature.
@@ -10,7 +10,7 @@ Weather information includes
 Technologies used in project:
 - Kotlin Coroutines for background operations.
 - MVVM architecture.
-- ViewModel and live data.
+- ViewModel and LiveData.
 - Hilt for dependency  injection.
 - Navigation component.
 - A data layer with a repository.
@@ -25,20 +25,30 @@ Third-party libraries used in this project:
 The project consists of:
 - data: To act as the data layer.
 - ui: Contains the app pages.
-  - List: Show the list of the cities and a search bar..
+  - List: Show the list of the cities and a search bar to search for city by city name.
   - Details: Show the selected city weather details
 - utils: For utilities.
 
 # How to use the app
 - When open the app a list of cicties with a summary for each city weather will appear in a list.
+
+![](screenshots/List.jpg)
+
 - When search, use the city name and click "search" button on youe keyboard.
+
+![](screenshots/Search.jpg)
+
 - If a city is selected a details page will open
 
+![](screenshots/Details.jpg)
+
 # Known issues
-- There a delay when loading the list and that becuase parsing the JSON everytime the list page is opened, and that can be solved through cashing the parsed data in the local database.
+- There are a delay when loading the list and that's becuase parsing the JSON everytime the list page is opened, and that can be solved through cashing the parsed data in the local database, and using ViewModel.
 
 # Future work
-- Add pagination for he cities list.
+- Fix known issues.
+- Add UI states
+- Add pagination for the cities list.
 - Add more test.
 - Store the parsed JSON in ROOM database.
 - Download the the data folder from the API and extract the JSON.
