@@ -18,12 +18,12 @@ object WeatherUtil {
     }
 
     /**
-     * Convert speed from meter/sec to km/sec
+     * Convert speed from meter/sec to km/hour
      *
      * @receiver a number of type [Double]
      * @return The result of the conversation
      */
-    fun Double.speedFromMeterPerSecToKmPerSec(): Int {
+    fun Double.speedFromMeterPerSecToKmPerHour(): Int {
         return (this * 3.6).toInt()
     }
 }

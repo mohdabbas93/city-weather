@@ -12,7 +12,7 @@ import com.mohdabbas.cityweather.R
 import com.mohdabbas.cityweather.data.CityWeather
 import com.mohdabbas.cityweather.databinding.FragmentCityWeatherDetailsBinding
 import com.mohdabbas.cityweather.ui.SharedViewModel
-import com.mohdabbas.cityweather.util.WeatherUtil.speedFromMeterPerSecToKmPerSec
+import com.mohdabbas.cityweather.util.WeatherUtil.speedFromMeterPerSecToKmPerHour
 import com.mohdabbas.cityweather.util.WeatherUtil.temperatureFromKelvinToCelsius
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,7 +75,7 @@ class CityWeatherDetailsFragment : Fragment(R.layout.fragment_city_weather_detai
             wind.tvValue.text =
                 getString(
                     R.string.wind_speed_format,
-                    cityWeather.wind.speed.speedFromMeterPerSecToKmPerSec()
+                    cityWeather.wind.speed.speedFromMeterPerSecToKmPerHour()
                 )
 
             humidity.tvTitle.text = getString(R.string.humidity)
