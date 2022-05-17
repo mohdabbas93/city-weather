@@ -1,12 +1,12 @@
 package com.mohdabbas.cityweather.data
 
 /**
- * Represents Weather.
+ * Represents weather condition.
  *
- * @property id The weather id.
- * @property main The main weather condition.
- * @property description The weather condition description.
- * @property icon The weather condition icon.
+ * @property id Weather condition id
+ * @property main Group of weather parameters (Rain, Snow, Extreme etc.)
+ * @property description Weather condition within the group.
+ * @property icon Weather icon id
  */
 data class Weather(
     var id: Int,
