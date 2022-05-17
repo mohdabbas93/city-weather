@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mohdabbas.cityweather.R
+import com.mohdabbas.cityweather.data.Result
 import com.mohdabbas.cityweather.databinding.FragmentCityWeatherListBinding
 import com.mohdabbas.cityweather.ui.SharedViewModel
 import com.mohdabbas.cityweather.ui.list.adapter.CityWeatherAdapter
@@ -50,7 +52,18 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
 
     private fun setupObservers() {
         sharedViewModel.citiesWeather.observe(viewLifecycleOwner) {
-            cityWeatherAdapter.updateData(it)
+            when (it) {
+                is Result.Loading -> {
+                    Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), "Error..", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Success -> {
+                    Toast.makeText(requireContext(), "Success..", Toast.LENGTH_SHORT).show()
+                    cityWeatherAdapter.updateData(it.data)
+                }
+            }
         }
     }
 

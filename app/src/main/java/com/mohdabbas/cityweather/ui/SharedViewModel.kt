@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mohdabbas.cityweather.data.CityWeather
 import com.mohdabbas.cityweather.data.CityWeatherRepository
+import com.mohdabbas.cityweather.data.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(private val cityWeatherRepository: CityWeatherRepository) :
     ViewModel() {
 
-    private var _citiesWeather = MutableLiveData<List<CityWeather>>()
+    private var _citiesWeather = MutableLiveData<Result<List<CityWeather>>>()
     val citiesWeather = _citiesWeather
 
     /**
@@ -25,8 +26,9 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
      */
     fun getCitiesWeather() {
         viewModelScope.launch {
+            _citiesWeather.postValue(Result.Loading)
             val result = cityWeatherRepository.getCitiesWeather()
-            _citiesWeather.postValue(result)
+            _citiesWeather.postValue(Result.Success(result))
         }
     }
 
@@ -37,9 +39,14 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
      * @return list of [CityWeather] if exist or empty list
      */
     fun searchByCityName(name: String): List<CityWeather> {
-        return citiesWeather.value?.filter {
-            it.city.findname.contains(name.trim(), ignoreCase = true)
-        } ?: listOf()
+        val citiesWeatherResult = citiesWeather.value
+        return if (citiesWeatherResult is Result.Success) {
+            citiesWeatherResult.data.filter {
+                it.city.findname.contains(name.trim(), ignoreCase = true)
+            }
+        } else {
+            emptyList()
+        }
     }
 
     /**
@@ -49,6 +56,11 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
      * @return [CityWeather] if exist or null if not
      */
     fun getCityWeatherInfoByCityId(cityId: Int): CityWeather? {
-        return citiesWeather.value?.firstOrNull { it.city.id == cityId }
+        val citiesWeatherResult = citiesWeather.value
+        return if (citiesWeatherResult is Result.Success) {
+            citiesWeatherResult.data.firstOrNull { it.city.id == cityId }
+        } else {
+            null
+        }
     }
 }
