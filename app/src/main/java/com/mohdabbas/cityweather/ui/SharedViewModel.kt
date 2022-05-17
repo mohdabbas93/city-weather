@@ -7,6 +7,7 @@ import com.mohdabbas.cityweather.data.CityWeather
 import com.mohdabbas.cityweather.data.CityWeatherRepository
 import com.mohdabbas.cityweather.data.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
      * them post the result to the [_citiesWeather] mutable live data
      */
     fun getCitiesWeather() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _citiesWeather.postValue(Result.Loading)
             val result = cityWeatherRepository.getCitiesWeather()
             _citiesWeather.postValue(Result.Success(result))
