@@ -82,4 +82,14 @@ class CityWeatherRepository @Inject constructor(
     suspend fun getCitiesWeatherByCityName(cityName: String): List<CityWeather> {
         return mapper.run { localDataSource.getCitiesWeatherByCityName(cityName).toCityWeather() }
     }
+
+    /**
+     * This function is used to get the city weather details from the local data source
+     * by city id
+     *
+     * @return City weather
+     */
+    suspend fun getCityWeatherByCityId(cityId: Int): CityWeather {
+        return mapper.run { localDataSource.getCityWeatherByCityId(cityId).toCityWeather() }
+    }
 }

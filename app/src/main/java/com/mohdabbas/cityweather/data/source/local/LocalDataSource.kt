@@ -39,4 +39,14 @@ class LocalDataSource @Inject constructor(private val cityWeatherDao: CityWeathe
     suspend fun getCitiesWeatherByCityName(cityName: String): List<CityWeatherData> {
         return cityWeatherDao.getCitiesWeatherByCityName(cityName)
     }
+
+    /**
+     * This function is used to get the city weather details from the database
+     * by city id
+     *
+     * @return City weather data
+     */
+    suspend fun getCityWeatherByCityId(cityId: Int): CityWeatherData {
+        return cityWeatherDao.getCityWeatherByCityId(cityId)
+    }
 }

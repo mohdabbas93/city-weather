@@ -39,4 +39,12 @@ interface CityWeatherDao {
      */
     @Query("SELECT * FROM city_weather WHERE city_name LIKE '%' || :cityName || '%'")
     suspend fun getCitiesWeatherByCityName(cityName: String): List<CityWeatherData>
+
+    /**
+     *  The function used to get city weather details form cities_weather table by city id
+     *
+     *  @return City weather data
+     */
+    @Query("SELECT * FROM city_weather WHERE city_id = :cityId")
+    suspend fun getCityWeatherByCityId(cityId: Int): CityWeatherData
 }
