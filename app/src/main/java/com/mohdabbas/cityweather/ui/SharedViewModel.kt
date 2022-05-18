@@ -9,6 +9,7 @@ import com.mohdabbas.cityweather.data.CityWeatherRepository
 import com.mohdabbas.cityweather.data.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -56,20 +57,24 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
         return emptyList()
     }
 
+    private var _searchedCitiesWeather = MutableLiveData<Result<List<CityWeather>>>()
+    val searchedCitiesWeather: LiveData<Result<List<CityWeather>>> = _searchedCitiesWeather
+
+    private var searchJob: Job? = null
+
     /**
      * Search the list of cities by city name and return list of [CityWeather]
      *
      * @param name the name or part of the name of city/cities to be found
      * @return list of [CityWeather] if exist or empty list
      */
-    fun searchByCityName(name: String): List<CityWeather> {
-        val citiesWeatherResult = citiesWeather.value
-        return if (citiesWeatherResult is Result.Success) {
-            citiesWeatherResult.data.filter {
-                it.city.findname.contains(name.trim(), ignoreCase = true)
-            }
-        } else {
-            emptyList()
+    fun searchByCityName(name: String) {
+        searchJob?.cancel()
+
+        searchJob = viewModelScope.launch(Dispatchers.IO) {
+            _searchedCitiesWeather.postValue(Result.Loading)
+            val result = cityWeatherRepository.getCitiesWeatherByCityName(name.trim())
+            _searchedCitiesWeather.postValue(Result.Success(result))
         }
     }
 

@@ -76,14 +76,36 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
                 }
             }
         }
+
+        sharedViewModel.searchedCitiesWeather.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.apply {
+                        makeViewsInvisible(rvCityWeather)
+                        showViews(loading)
+                    }
+                }
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), "Error..", Toast.LENGTH_SHORT).show()
+                    binding.apply {
+                        makeViewsInvisible(loading, rvCityWeather)
+                    }
+                }
+                is Result.Success -> {
+                    binding.apply {
+                        makeViewsInvisible(loading)
+                        showViews(rvCityWeather)
+                    }
+                    cityWeatherAdapter.updateData(result.data)
+                }
+            }
+        }
     }
 
     private fun setupSearch() {
         binding.etSearch.setOnEditorActionListener { textView, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH && textView.text.isNotBlank()) {
-                val citiesWeather =
-                    sharedViewModel.searchByCityName(textView.text.trim().toString())
-                cityWeatherAdapter.updateData(citiesWeather)
+                sharedViewModel.searchByCityName(textView.text.trim().toString())
             }
             false
         }
