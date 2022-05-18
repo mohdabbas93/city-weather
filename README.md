@@ -51,14 +51,9 @@ The project consists of:
 
 # Known issues
 
-- There are a delay when loading the list when you open the app the first time because the file is
-  being downloaded from the server, parsed the json, save it in database, then finally will be shawn
-  in the screen.
-    - Next time you will open the application the data will be loaded directly from the database,
-      but still expecting to take some time due the size of the data (All data retrieved at once).
-    - This can be solved by applying pagination, by getting the data page by page with a certain
-      size
-      (ex: 10 items per request), that will make retrieving the data much faster and efficient.
+- There are a delay when loading the list when you open the app the first time because the file is being downloaded from the server, parsed the json, save it in database, then finally will be shown in the screen.
+ - Next time you will open the application the data will be loaded directly from the database, but still expecting to take some time due the size of the data (All data retrieved at once).
+ - This can be solved by applying pagination, by getting the data page by page with a certain size (ex: 10 items per request), that will make retrieving the data much faster and efficient.
 
 # Future work
 
