@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mohdabbas.cityweather.R
 import com.mohdabbas.cityweather.data.CityWeather
 import com.mohdabbas.cityweather.data.Result
 import com.mohdabbas.cityweather.databinding.FragmentCityWeatherDetailsBinding
-import com.mohdabbas.cityweather.ui.SharedViewModel
 import com.mohdabbas.cityweather.util.WeatherUtil.speedFromMeterPerSecToKmPerHour
 import com.mohdabbas.cityweather.util.WeatherUtil.temperatureFromKelvinToCelsius
 import com.mohdabbas.cityweather.util.hideViews
@@ -30,7 +29,7 @@ class CityWeatherDetailsFragment : Fragment(R.layout.fragment_city_weather_detai
     private var _binding: FragmentCityWeatherDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val viewModel: CityWeatherDetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,11 +48,11 @@ class CityWeatherDetailsFragment : Fragment(R.layout.fragment_city_weather_detai
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel.getCityWeatherInfoByCityId(cityWeatherDetailsFragmentArgs.cityId)
+        viewModel.getCityWeatherInfoByCityId(cityWeatherDetailsFragmentArgs.cityId)
     }
 
     private fun setupObservers() {
-        sharedViewModel.cityWeatherDetails.observe(viewLifecycleOwner) { result ->
+        viewModel.cityWeatherDetails.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
                     binding.apply {
