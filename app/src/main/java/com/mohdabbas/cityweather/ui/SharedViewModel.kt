@@ -1,5 +1,6 @@
 package com.mohdabbas.cityweather.ui
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +20,7 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
     ViewModel() {
 
     private var _citiesWeather = MutableLiveData<Result<List<CityWeather>>>()
-    val citiesWeather = _citiesWeather
+    val citiesWeather: LiveData<Result<List<CityWeather>>> = _citiesWeather
 
     /**
      * Get the cities weather from the [CityWeatherRepository] and when retrieve
