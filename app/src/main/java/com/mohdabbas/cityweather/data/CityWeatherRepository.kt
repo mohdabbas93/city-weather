@@ -5,7 +5,6 @@ import com.mohdabbas.cityweather.data.source.local.LocalDataSource
 import com.mohdabbas.cityweather.data.source.remote.RemoteDataSource
 import com.mohdabbas.cityweather.util.GZIPUtil
 import com.mohdabbas.cityweather.util.InternalStorageReadWriteUtil
-import com.mohdabbas.cityweather.util.JsonParser
 import javax.inject.Inject
 
 /**
@@ -16,7 +15,6 @@ import javax.inject.Inject
  * @property remoteDataSource an instance of the [RemoteDataSource] class
  * @property internalStorageReadWrite an instance of the [InternalStorageReadWriteUtil] class
  * @property gzipUtil an instance of the [GZIPUtil] class
- * @property jsonParser an instance of the [JsonParser] class.
  * @property mapper an instance of the [Mapper] class
  */
 class CityWeatherRepository @Inject constructor(
@@ -24,7 +22,6 @@ class CityWeatherRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val internalStorageReadWrite: InternalStorageReadWriteUtil,
     private val gzipUtil: GZIPUtil,
-    private val jsonParser: JsonParser,
     private val mapper: Mapper
 ) {
 
