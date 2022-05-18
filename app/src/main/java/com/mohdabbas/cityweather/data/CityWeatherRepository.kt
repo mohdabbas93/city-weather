@@ -7,6 +7,7 @@ import com.mohdabbas.cityweather.data.source.remote.RemoteDataSource
 import com.mohdabbas.cityweather.util.GZIPUtil
 import com.mohdabbas.cityweather.util.InternalStorageReadWriteUtil
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * The repository to interact with the cities weather data
@@ -18,6 +19,7 @@ import javax.inject.Inject
  * @property gzipUtil an instance of the [GZIPUtil] class
  * @property mapper an instance of the [Mapper] class
  */
+@Singleton
 class CityWeatherRepository @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
