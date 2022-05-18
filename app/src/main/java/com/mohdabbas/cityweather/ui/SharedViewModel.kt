@@ -26,11 +26,33 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
      * them post the result to the [_citiesWeather] mutable live data
      */
     fun getCitiesWeather() {
+        val cashedData = getCachedData()
+        if (cashedData.isNotEmpty()) {
+            _citiesWeather.value = Result.Success(cashedData)
+            return
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             _citiesWeather.postValue(Result.Loading)
             val result = cityWeatherRepository.getCitiesWeather()
             _citiesWeather.postValue(Result.Success(result))
         }
+    }
+
+    /**
+     *  Return a cashed version of the data instead of requesting the same data from
+     *  the database everytime to page is navigated to
+     *
+     *  @return List of [CityWeather]
+     */
+    private fun getCachedData(): List<CityWeather> {
+        _citiesWeather.value?.let { result ->
+            if (result is Result.Success) {
+                return result.data
+            }
+        }
+
+        return emptyList()
     }
 
     /**
