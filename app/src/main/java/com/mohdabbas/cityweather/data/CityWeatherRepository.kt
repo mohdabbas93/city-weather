@@ -2,6 +2,7 @@ package com.mohdabbas.cityweather.data
 
 import com.google.gson.Gson
 import com.mohdabbas.cityweather.data.source.local.LocalDataSource
+import com.mohdabbas.cityweather.data.source.local.entity.CityWeatherData
 import com.mohdabbas.cityweather.data.source.remote.RemoteDataSource
 import com.mohdabbas.cityweather.util.GZIPUtil
 import com.mohdabbas.cityweather.util.InternalStorageReadWriteUtil
@@ -70,5 +71,15 @@ class CityWeatherRepository @Inject constructor(
 
         val mappedData = mapper.run { citiesWeather.toCityWeatherData() }
         localDataSource.storeCitiesWeatherDataInDb(mappedData)
+    }
+
+    /**
+     * The function is used to get the data of the cities weather from the local data source
+     * by city name and map the result to city weather
+     *
+     * @return List of cities weather
+     */
+    suspend fun getCitiesWeatherByCityName(cityName: String): List<CityWeather> {
+        return mapper.run { localDataSource.getCitiesWeatherByCityName(cityName).toCityWeather() }
     }
 }
