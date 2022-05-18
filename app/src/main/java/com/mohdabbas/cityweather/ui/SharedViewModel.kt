@@ -66,7 +66,6 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
      * Search the list of cities by city name and return list of [CityWeather]
      *
      * @param name the name or part of the name of city/cities to be found
-     * @return list of [CityWeather] if exist or empty list
      */
     fun searchByCityName(name: String) {
         searchJob?.cancel()
