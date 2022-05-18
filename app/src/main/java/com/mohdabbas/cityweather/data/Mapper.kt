@@ -40,32 +40,39 @@ class Mapper @Inject constructor() {
      * @receiver A list of type [CityWeatherData]
      * @return List of [CityWeather]
      */
-    fun List<CityWeatherData>.toCityWeather() = map {
-        CityWeather(
-            city = City(
-                id = it.cityId,
-                name = it.cityName,
-                findname = "",
-                country = it.country,
-                coord = Coord(0.0, 0.0),
-                zoom = 0
-            ),
-            time = it.time,
-            main = Main(
-                temp = it.temperature,
-                pressure = it.pressure,
-                humidity = it.humidity,
-                tempMin = it.temperatureMin,
-                tempMax = it.temperatureMax
-            ),
-            wind = Wind(
-                speed = it.windSpeed,
-                deg = 0.0,
-                varBeg = 0.0,
-                varEnd = 0.0
-            ),
-            clouds = Clouds(0.0),
-            weather = it.weather
-        )
-    }
+    fun List<CityWeatherData>.toCityWeather() = map { it.toCityWeather() }
+
+    /**
+     * The function is used to mapped  [CityWeatherData] to
+     * [CityWeather]
+     *
+     * @receiver A type of [CityWeatherData]
+     * @return  [CityWeather]
+     */
+    fun CityWeatherData.toCityWeather() = CityWeather(
+        city = City(
+            id = cityId,
+            name = cityName,
+            findname = "",
+            country = country,
+            coord = Coord(0.0, 0.0),
+            zoom = 0
+        ),
+        time = time,
+        main = Main(
+            temp = temperature,
+            pressure = pressure,
+            humidity = humidity,
+            tempMin = temperatureMin,
+            tempMax = temperatureMax
+        ),
+        wind = Wind(
+            speed = windSpeed,
+            deg = 0.0,
+            varBeg = 0.0,
+            varEnd = 0.0
+        ),
+        clouds = Clouds(0.0),
+        weather = weather
+    )
 }
