@@ -14,7 +14,7 @@ import com.mohdabbas.cityweather.data.Result
 import com.mohdabbas.cityweather.databinding.FragmentCityWeatherListBinding
 import com.mohdabbas.cityweather.ui.SharedViewModel
 import com.mohdabbas.cityweather.ui.list.adapter.CityWeatherAdapter
-import com.mohdabbas.cityweather.util.hideViews
+import com.mohdabbas.cityweather.util.makeViewsInvisible
 import com.mohdabbas.cityweather.util.showViews
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,19 +57,19 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
             when (it) {
                 is Result.Loading -> {
                     binding.apply {
-                        hideViews(etSearch, rvCityWeather)
+                        makeViewsInvisible(etSearch, rvCityWeather)
                         showViews(loading)
                     }
                 }
                 is Result.Error -> {
                     Toast.makeText(requireContext(), "Error..", Toast.LENGTH_SHORT).show()
                     binding.apply {
-                        hideViews(loading, etSearch, rvCityWeather)
+                        makeViewsInvisible(loading, etSearch, rvCityWeather)
                     }
                 }
                 is Result.Success -> {
                     binding.apply {
-                        hideViews(loading)
+                        makeViewsInvisible(loading)
                         showViews(etSearch, rvCityWeather)
                     }
                     cityWeatherAdapter.updateData(it.data)
