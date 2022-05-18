@@ -24,3 +24,12 @@ fun showViews(vararg views: View) {
 fun hideViews(vararg views: View) {
     views.forEach { it.visibility = View.GONE }
 }
+
+/**
+ * This function is used to make the views invisible by setting their visibility to INVISIBLE.
+ *
+ * @param views The views to be invisible
+ */
+fun makeViewsInvisible(vararg views: View) {
+    views.forEach { it.visibility = View.INVISIBLE }
+}
