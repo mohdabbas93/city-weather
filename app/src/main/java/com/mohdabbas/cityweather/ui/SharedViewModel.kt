@@ -82,18 +82,23 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
         }
     }
 
+    private var _cityWeatherDetails = MutableLiveData<Result<CityWeather>>()
+    val cityWeatherDetails: LiveData<Result<CityWeather>> = _cityWeatherDetails
+
+    private var cityWeatherDetailsJob: Job? = null
+
     /**
-     * Search the list of cities by city id and return [CityWeather]
+     * Search the city weather by city id and return [CityWeather]
      *
      * @param cityId the id of the city weather to be found.
-     * @return [CityWeather] if exist or null if not
      */
-    fun getCityWeatherInfoByCityId(cityId: Int): CityWeather? {
-        val citiesWeatherResult = citiesWeather.value
-        return if (citiesWeatherResult is Result.Success) {
-            citiesWeatherResult.data.firstOrNull { it.city.id == cityId }
-        } else {
-            null
+    fun getCityWeatherInfoByCityId(cityId: Int) {
+        cityWeatherDetailsJob?.cancel()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            _cityWeatherDetails.postValue(Result.Loading)
+            val result = cityWeatherRepository.getCityWeatherByCityId(cityId)
+            _cityWeatherDetails.postValue(Result.Success(result))
         }
     }
 }

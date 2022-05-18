@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mohdabbas.cityweather.R
 import com.mohdabbas.cityweather.data.CityWeather
+import com.mohdabbas.cityweather.data.Result
 import com.mohdabbas.cityweather.databinding.FragmentCityWeatherDetailsBinding
 import com.mohdabbas.cityweather.ui.SharedViewModel
 import com.mohdabbas.cityweather.util.WeatherUtil.speedFromMeterPerSecToKmPerHour
@@ -34,17 +36,34 @@ class CityWeatherDetailsFragment : Fragment(R.layout.fragment_city_weather_detai
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCityWeatherDetailsBinding.inflate(layoutInflater, container, false)
+
+        setupObservers()
+
         return binding.root
     }
-
 
     private val cityWeatherDetailsFragmentArgs: CityWeatherDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel.getCityWeatherInfoByCityId(cityWeatherDetailsFragmentArgs.cityId)?.let {
-            populateViews(it)
+        sharedViewModel.getCityWeatherInfoByCityId(cityWeatherDetailsFragmentArgs.cityId)
+    }
+
+    private fun setupObservers() {
+        sharedViewModel.cityWeatherDetails.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), "Error..", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Success -> {
+                    Toast.makeText(requireContext(), "Success..", Toast.LENGTH_SHORT).show()
+                    populateViews(result.data)
+                }
+            }
         }
     }
 
