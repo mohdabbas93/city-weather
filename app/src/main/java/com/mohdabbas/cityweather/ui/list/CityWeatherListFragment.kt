@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mohdabbas.cityweather.R
 import com.mohdabbas.cityweather.data.Result
 import com.mohdabbas.cityweather.databinding.FragmentCityWeatherListBinding
-import com.mohdabbas.cityweather.ui.SharedViewModel
 import com.mohdabbas.cityweather.ui.list.adapter.CityWeatherAdapter
 import com.mohdabbas.cityweather.util.makeViewsInvisible
 import com.mohdabbas.cityweather.util.showViews
@@ -29,7 +28,7 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
 
     private val cityWeatherAdapter = CityWeatherAdapter(listOf())
 
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val sharedViewModel: CityWeatherListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

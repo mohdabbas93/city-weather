@@ -1,4 +1,4 @@
-package com.mohdabbas.cityweather.ui
+package com.mohdabbas.cityweather.ui.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +17,7 @@ import javax.inject.Inject
  * A ViewModel for the [CityWeatherListFragment]
  */
 @HiltViewModel
-class SharedViewModel @Inject constructor(private val cityWeatherRepository: CityWeatherRepository) :
+class CityWeatherListViewModel @Inject constructor(private val cityWeatherRepository: CityWeatherRepository) :
     ViewModel() {
 
     private var _citiesWeather = MutableLiveData<Result<List<CityWeather>>>()
