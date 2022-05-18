@@ -16,6 +16,8 @@ import com.mohdabbas.cityweather.databinding.FragmentCityWeatherDetailsBinding
 import com.mohdabbas.cityweather.ui.SharedViewModel
 import com.mohdabbas.cityweather.util.WeatherUtil.speedFromMeterPerSecToKmPerHour
 import com.mohdabbas.cityweather.util.WeatherUtil.temperatureFromKelvinToCelsius
+import com.mohdabbas.cityweather.util.hideViews
+import com.mohdabbas.cityweather.util.showViews
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -54,13 +56,22 @@ class CityWeatherDetailsFragment : Fragment(R.layout.fragment_city_weather_detai
         sharedViewModel.cityWeatherDetails.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    Toast.makeText(requireContext(), "Loading..", Toast.LENGTH_SHORT).show()
+                    binding.apply {
+                        hideViews(detailsContainer)
+                        showViews(loading)
+                    }
                 }
                 is Result.Error -> {
                     Toast.makeText(requireContext(), "Error..", Toast.LENGTH_SHORT).show()
+                    binding.apply {
+                        hideViews(detailsContainer, loading)
+                    }
                 }
                 is Result.Success -> {
-                    Toast.makeText(requireContext(), "Success..", Toast.LENGTH_SHORT).show()
+                    binding.apply {
+                        hideViews(loading)
+                        showViews(detailsContainer)
+                    }
                     populateViews(result.data)
                 }
             }
