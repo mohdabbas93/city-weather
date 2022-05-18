@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mohdabbas.cityweather.R
 import com.mohdabbas.cityweather.data.Result
@@ -29,7 +29,7 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
 
     private val cityWeatherAdapter = CityWeatherAdapter(listOf())
 
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
