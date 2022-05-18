@@ -71,6 +71,11 @@ class SharedViewModel @Inject constructor(private val cityWeatherRepository: Cit
     fun searchByCityName(name: String) {
         searchJob?.cancel()
 
+        if (name.isBlank()) {
+            _searchedCitiesWeather.value = _citiesWeather.value
+            return
+        }
+
         searchJob = viewModelScope.launch(Dispatchers.IO) {
             _searchedCitiesWeather.postValue(Result.Loading)
             val result = cityWeatherRepository.getCitiesWeatherByCityName(name.trim())

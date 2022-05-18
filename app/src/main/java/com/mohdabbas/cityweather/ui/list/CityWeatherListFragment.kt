@@ -104,7 +104,7 @@ class CityWeatherListFragment : Fragment(R.layout.fragment_city_weather_list) {
 
     private fun setupSearch() {
         binding.etSearch.setOnEditorActionListener { textView, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH && textView.text.isNotBlank()) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 sharedViewModel.searchByCityName(textView.text.trim().toString())
             }
             false
